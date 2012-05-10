@@ -10,16 +10,16 @@
 
 
 		<Button android:text="@string/menu" android:id="@+id/Menu"
-			android:layout_width="65dip" android:layout_height="wrap_content"
-			android:layout_weight="0"></Button>
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_weight="10"></Button>
 
 		<TextView android:id="@+id/programName"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:gravity="center" android:layout_weight="4"></TextView>
+			android:gravity="center" android:layout_weight="7"></TextView>
 
 		<ToggleButton android:textOn="@string/pause" android:textOff="@string/resume" android:id="@+id/MenuPause"
-			android:layout_width="65dip" android:layout_height="wrap_content"
-			android:layout_weight="0"></ToggleButton>
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_weight="10"></ToggleButton>
 
 	</LinearLayout>
 
