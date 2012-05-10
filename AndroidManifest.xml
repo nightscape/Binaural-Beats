@@ -4,7 +4,8 @@
       android:versionCode="34"
       android:versionName="1.7"
       android:installLocation="auto">
-    <application android:icon="@drawable/icon" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar" android:allowBackup="true">
+    <application android:icon="@drawable/icon" android:label="@string/app_name" android:theme="@style/BinauralBeat.Theme" android:allowBackup="true"
+        android:hardwareAccelerated="true">
         <activity android:name=".BBeat"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
@@ -26,7 +27,7 @@
 	
 <supports-screens android:smallScreens="false"/>
 
-<uses-sdk android:minSdkVersion="8"></uses-sdk>
+<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="14"></uses-sdk>
 
 
 </manifest> 
