@@ -399,5 +399,13 @@ public class DefaultProgramsBuilder {
 		return p;
 	}
 				
+	public static Program NEURO_FEEDBACK(Program p) {
+		DynamicProgram dynamicProgram = new DynamicProgram(p.getName());
+		dynamicProgram.setDescription("Meditation using a NeuroSky Mindwave Mobile. "+
+		"The lower the tone, the higher your meditation level. "+"The louder the chord, the higher your attention level.");
+		dynamicProgram.setAuthor("@gimme_moe");
+
+		return dynamicProgram;
+	}
 
 }

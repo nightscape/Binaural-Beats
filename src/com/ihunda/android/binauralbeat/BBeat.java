@@ -415,6 +415,7 @@ public class BBeat extends Activity {
     	lv_preset_arr.add(getString(R.string.program_shamanic_rhythm));
     	lv_preset_arr.add(getString(R.string.program_smr));
     	lv_preset_arr.add(getString(R.string.program_schumann));
+    	lv_preset_arr.add(getString(R.string.program_neuro_feedback));
     	lv_preset_arr.add(getString(R.string.getting_involved));
     }
 
@@ -738,9 +739,12 @@ public class BBeat extends Activity {
 			p = DefaultProgramsBuilder.SCHUMANN_RESONANCE(new Program(name));
 		else if (name.equals(getString(R.string.program_powernap)))
 			p = Program.fromGnauralFactory(readRawTextFile(R.raw.powernap));
-		else
-		{
+		else if (name.equals(getString(R.string.program_airplanetravelaid)))
 	    	p = Program.fromGnauralFactory(readRawTextFile(R.raw.airplanetravelaid));
+		else if (name.equals(getString(R.string.program_neuro_feedback))){
+			p = DefaultProgramsBuilder.NEURO_FEEDBACK(new Program(name));
+		} else {
+			throw new IllegalArgumentException("Unknown program "+name);
 		}
 		
 		_tmp_program_holder = p;
