@@ -23,6 +23,18 @@ package com.ihunda.android.binauralbeat;
  *   BBT project home is at https://github.com/GiorgioRegni/Binaural-Beats
  */
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.content.Context;
+import android.util.Log;
+
 import com.ihunda.android.binauralbeat.viz.Aurora;
 import com.ihunda.android.binauralbeat.viz.Black;
 import com.ihunda.android.binauralbeat.viz.Flash;
@@ -35,6 +47,46 @@ import com.ihunda.android.binauralbeat.viz.Plasma;
 import com.ihunda.android.binauralbeat.viz.Starfield;
 
 public class DefaultProgramsBuilder {
+	private static Map<String,Method> names = null;
+
+	public static Map<String,Method> getProgramMethods(Context context) {
+		if (names != null)
+			return names;
+		names = new HashMap<String,Method>();
+		/*
+		 * Returns the public static methods of a class or interface, including
+		 * those declared in super classes and interfaces.
+		 */
+
+    	Class<R.string> resourceStrings = R.string.class;
+		for (Method method : DefaultProgramsBuilder.class.getMethods()) {
+			if (Modifier.isStatic(method.getModifiers()) && method.getReturnType().isAssignableFrom(Program.class) && method.getName().matches("[A-Z_]+")) {
+				try {
+					names.put(context.getString(resourceStrings.getField("program_"+method.getName().toLowerCase()).getInt(null)), method);
+				} catch (IllegalArgumentException e) {
+					throw new RuntimeException(e);
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException(e);
+				} catch (NoSuchFieldException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+
+		return names;
+	}
+
+	public static Program getProgram(String name, Context context) {
+		try {
+			return (Program) DefaultProgramsBuilder.getProgramMethods(context).get(name).invoke(null, new Program(name));
+		} catch (IllegalArgumentException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public static Program SELF_HYPNOSIS(Program p) {
 		p.setDescription("Short meditation preset to unite your conscious and subconsious mind. " +
@@ -57,9 +109,9 @@ public class DefaultProgramsBuilder {
 		return p;
 	}
 
-	public static Program AWAKE(Program p) {
-		p.setDescription("A quick cafeine boost, this preset shorly reaches Gamma waves, provides "+
-		"higher mental activity, including perception, problem solving, and consciousness.");
+	public static Program HIGHEST_MENTAL_ACTIVITY(Program p) {
+		p.setDescription("A quick cafeine boost, this preset shorly reaches Gamma waves, provides "
+				+ "higher mental activity, including perception, problem solving, and consciousness.");
 		p.setAuthor("@GiorgioRegni");
 
 		p.addPeriod(new Period(120, SoundLoop.WHITE_NOISE, 0.3f, null).
